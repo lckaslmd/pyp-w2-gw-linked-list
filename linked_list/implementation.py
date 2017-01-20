@@ -17,7 +17,7 @@ class LinkedList(AbstractLinkedList):
         return '[' + ", ".join([ str(item.elem) for item in self ]) + ']'
 
     def __len__(self):
-        return len([ item for item in self if item is not None ])
+        return len([ item for item in self ])
 
     def __iter__(self):
         self.current = self.start
