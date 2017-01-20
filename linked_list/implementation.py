@@ -51,10 +51,10 @@ class LinkedList(AbstractLinkedList):
     def __eq__(self, other):
         return isinstance(self, LinkedList) and isinstance(other, LinkedList) and \
                len(self) is len(other)                                        and \
-               all(items[0].elem is items[1].elem for items in zip(self, other))
+               all(items[0].elem == items[1].elem for items in zip(self, other))
 
     def __ne__(self, other):
-        return self is not other
+        return not (self == other)
         
     def append(self, elem):
         if self.end is None:

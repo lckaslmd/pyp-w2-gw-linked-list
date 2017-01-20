@@ -17,7 +17,7 @@ class LinkedListTestCase(unittest.TestCase):
         self.assertEqual(LinkedList([1, 2, 3])[0], 1)
         self.assertEqual(LinkedList([1, 2, 3])[1], 2)
         self.assertEqual(LinkedList([1, 2, 3])[2], 3)
-
+        
         with self.assertRaises(IndexError):
             LinkedList([1, 2, 3])[4]
         with self.assertRaises(IndexError):
