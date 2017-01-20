@@ -20,17 +20,9 @@ class LinkedList(AbstractLinkedList):
 
     def __iter__(self):
         self.current = self.start
-        return self
-
-    def next(self):
-        if self.current is None:
-            raise StopIteration()
-        else:
-            to_be_returned = self.current
+        while self.current is not None:
+            yield self.current
             self.current = self.current.next
-            return to_be_returned
-            
-    __next__ = next
     
     def __getitem__(self, index):
         index = (len(self) + index) if index < 0 else index
