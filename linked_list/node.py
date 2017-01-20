@@ -14,11 +14,7 @@ class Node(object):
               ('Node({})'.format(self.next.elem) if self.next else '/')
 
     def __eq__(self, other):
-        if self is None and other is None:
-            return True
-        elif self is None or other is None:
-            return False
-        return self.elem == other.elem and self.next == other.next
+        return self.elem == other.elem and self.next == other.next if self and other else False
         
     def __repr__(self):
         return str(self)
