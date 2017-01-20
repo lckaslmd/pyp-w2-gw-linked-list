@@ -16,3 +16,13 @@ coverage:
 	@echo $(TAG)Coverage report$(END)
 	@PYTHONPATH=. coverage run --source=$(PACKAGE) $(shell which py.test) ./tests -q --tb=no >/dev/null; true
 	@coverage report -m
+
+
+test-node:
+	@echo $(TAG)Running tests$(END)
+	PYTHONPATH=. py.test -s tests/test_node.py
+
+	
+test-imp:
+	@echo $(TAG)Running tests$(END)
+	PYTHONPATH=. py.test -s tests/test_list.py
