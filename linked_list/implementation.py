@@ -37,7 +37,7 @@ class LinkedList(AbstractLinkedList):
         for item in self:
             new_list.append(item.elem)
         for item in other:
-                new_list.append(item.elem)
+            new_list.append(item.elem)
         return new_list
     
     def __iadd__(self, other):
