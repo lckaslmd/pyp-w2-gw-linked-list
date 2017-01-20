@@ -43,9 +43,8 @@ class LinkedList(AbstractLinkedList):
 
     def __add__(self, other):
         new_list = LinkedList()
-        if self.start is not None:
-            for item in self:
-                new_list.append(item.elem)
+        for item in self:
+            new_list.append(item.elem)
         for item in other:
                 new_list.append(item.elem)
         return new_list
