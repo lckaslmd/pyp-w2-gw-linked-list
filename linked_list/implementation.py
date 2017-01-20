@@ -7,8 +7,7 @@ class LinkedList(AbstractLinkedList):
     """
 
     def __init__(self, elements=[]):
-        self.start = None
-        self.end = self.start
+        self.start, self.end = None, None
 
         for elem in elements:
             self.append(elem)
@@ -79,22 +78,16 @@ class LinkedList(AbstractLinkedList):
 
     def pop(self, index = -1):
         index = (len(self) + index) if index < 0 else index
-        counter = index
-        current_node = self.start
-        last_node = None
-        save = 0
+        current_node, last_node = self.start, None
         
         if index < 0 or index >= len(self) or self.start is None:
             raise IndexError('Index out of bounds')
         else:
             if index is 0:
-                save = self.start.elem
                 self.start = self.start.next
             else:
-                while counter > 0:
+                for _ in range(index, 0, -1):
                     last_node = current_node
                     current_node = last_node.next
-                    counter -= 1
-                save = current_node.elem
                 last_node.next = current_node.next
-        return save
+        return current_node.elem
