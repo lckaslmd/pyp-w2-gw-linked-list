@@ -13,11 +13,25 @@ class Node(object):
         return 'Node({})'.format(self.elem) + ' > ' + ('Node({})'.format(self.next.elem) if self.next else '/')
 
     def __eq__(self, other):
-        if isinstance(self.elem, collections.Iterable) and isinstance(other.elem, collections.Iterable):
-            return len(self.elem) is len(other.elem) and \
-                   all(items[0] is items[1] for items in zip(self.elem, other.elem))
+        def compare_elems(elem1, elem2):
+            if isinstance(elem1, collections.Iterable) and isinstance(elem2, collections.Iterable):
+                return len(elem1) is len(elem2) and \
+                       all(items[0] is items[1] for items in zip(elem1, elem2))
+            else:
+                return self.elem is other.elem
+                
+        flg_equal = True
+        current_self, current_other = self, other
+        while current_self is not None and current_other is not None:
+            flg_equal = flg_equal and compare_elems(current_self.elem, current_other.elem)
+            current_self = current_self.next
+            current_other = current_other.next
+        if current_self is None and current_other is not None or \
+           current_self is not None and current_other is None:
+            return False
         else:
-            return self.elem is other.elem
-
+            return flg_equal
+            
     def __repr__(self):
         return str(self)
+        

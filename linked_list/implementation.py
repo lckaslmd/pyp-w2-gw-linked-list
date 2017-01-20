@@ -1,5 +1,5 @@
-from interface import AbstractLinkedList
-from node import Node
+from .interface import AbstractLinkedList
+from .node import Node
 
 class LinkedList(AbstractLinkedList):
     """
@@ -45,8 +45,11 @@ class LinkedList(AbstractLinkedList):
             self.current = self.current.next
             return to_be_returned
             
+    __next__ = next
+    
     def __getitem__(self, index):
-        if index < 0 or index > len(self) or self.start is None:
+        index = (len(self) + index) if index < 0 else index
+        if index < 0 or index >= len(self) or self.start is None:
             raise IndexError('Index out of bounds')
         for ind, item in enumerate(self):
             if ind is index:
@@ -54,21 +57,26 @@ class LinkedList(AbstractLinkedList):
 
     def __add__(self, other):
         new_list = LinkedList()
-        for index, item in enumerate(self):
-            new_list.append(item.elem)
-            if index is len(self) - 1:
-                new_list.end.next = other.start
+        if self.start is not None:
+            for item in self:
+                new_list.append(item.elem)
+        for item in other:
+                new_list.append(item.elem)
         return new_list
     
     def __iadd__(self, other):
-        if self.start is None:
-            self.start = LinkedList()
-            self.end = other.start
-        self.end.next = other.start
+        if self.end is not None:
+            self.end.next = other.start
+        else:
+            if other.start is not None:
+                self.start = other.start
+                self.end = other.end
         return self
 
     def __eq__(self, other):
-        return all([items[0].elem is items[1].elem for items in zip(self, other)])
+        return isinstance(self, LinkedList) and isinstance(other, LinkedList) and \
+               len(self) is len(other)                                        and \
+               all([items[0].elem is items[1].elem for items in zip(self, other)])
 
     def __ne__(self, other):
         return self is not other
@@ -83,14 +91,27 @@ class LinkedList(AbstractLinkedList):
             self.end = self.end.next
 
     def count(self):
-        return self.__len__()
+        return len(self)
 
     def pop(self, index = -1):
-        if self.__len__() == 0:
-            raise IndexError
+        index = (len(self) + index) if index < 0 else index
+        counter = index
+        current_node = self.start
+        last_node = None
+        save = 0
+        
+        if index < 0 or index >= len(self) or self.start is None:
+            raise IndexError('Index out of bounds')
         else:
-            for elem in self.elements:
-                if self.elements[elem] == self.elements[index]:
-                    self.elements.next == None
-                
-        return self
+            
+            if index is 0:
+                save = self.start.elem
+                self.start = self.start.next
+            else:
+                while counter > 0:
+                    last_node = current_node
+                    current_node = last_node.next
+                    counter -= 1
+                save = current_node.elem
+                last_node.next = current_node.next
+        return save
