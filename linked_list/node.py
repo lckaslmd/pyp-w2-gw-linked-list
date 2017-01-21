@@ -1,5 +1,3 @@
-import collections
-
 class Node(object):
     """
     Node class representing each of the linked nodes in the list.
