@@ -1,5 +1,6 @@
 from .interface import AbstractLinkedList
 from .node import Node
+from functools import reduce
 
 class LinkedList(AbstractLinkedList):
     """
@@ -31,21 +32,13 @@ class LinkedList(AbstractLinkedList):
         for ind, item in enumerate(self):
             if ind is index:
                 return item.elem
-
+        
     def __add__(self, other):
-        new_list = LinkedList()
-        for item in self:
-            new_list.append(item.elem)
-        for item in other:
-            new_list.append(item.elem)
-        return new_list
+        return reduce(lambda x, y: x.__iadd__(y), (self, other), LinkedList())
     
     def __iadd__(self, other):
-        if self.end is not None:
-            self.end.next = other.start
-        else:
-            self.start = other.start
-            self.end = other.end
+        for item in other:
+            self.append(item.elem)
         return self
 
     def __eq__(self, other):

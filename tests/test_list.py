@@ -17,12 +17,23 @@ class LinkedListTestCase(unittest.TestCase):
         self.assertEqual(LinkedList([1, 2, 3])[0], 1)
         self.assertEqual(LinkedList([1, 2, 3])[1], 2)
         self.assertEqual(LinkedList([1, 2, 3])[2], 3)
+        self.assertEqual(LinkedList([1, 2, 3])[-1], 3)
+        self.assertEqual(LinkedList([1, 2, 3])[-2], 2)
+        self.assertEqual(LinkedList([1, 2, 3])[-3], 1)
         
+        with self.assertRaises(IndexError):
+            LinkedList([1, 2, 3])[3]
         with self.assertRaises(IndexError):
             LinkedList([1, 2, 3])[4]
         with self.assertRaises(IndexError):
+            LinkedList([1, 2, 3])[-4]
+        with self.assertRaises(IndexError):
             LinkedList([])[0]
-
+        with self.assertRaises(IndexError):
+            LinkedList([])[-1]
+        with self.assertRaises(IndexError):
+            LinkedList()[0]
+                    
     def test_creation_and_equal(self):
         l1 = LinkedList([1, 2, 3])
 
